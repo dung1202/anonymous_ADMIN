@@ -2,6 +2,7 @@ import axios from 'axios'
 
 let instantAxios = axios.create({
     timeout: 20000,
+    // baseURL: "https://voucherhunter.herokuapp.com",
     baseURL: 'http://localhost:4000/'
 })
 instantAxios.interceptors.request.use((request) => {
@@ -33,8 +34,8 @@ export const getProductid = (id) => {
 export const getProduct = () => {
     return instantAxios.get('/product')
 }
-export const updateproduct = (body) => {
-    return instantAxios.put('/product', body);
+export const updateproduct = (id, body) => {
+    return instantAxios.put(`/product/${id}`, body);
 }
 export const deleteProduct = (id) => {
     return instantAxios.delete('/product/' + id)
