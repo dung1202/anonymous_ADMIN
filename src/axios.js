@@ -2,8 +2,8 @@ import axios from 'axios'
 
 let instantAxios = axios.create({
     timeout: 20000,
-    // baseURL: "https://voucherhunter.herokuapp.com",
-    baseURL: 'http://localhost:4000/'
+    baseURL: "https://voucherhunter.herokuapp.com",
+    // baseURL: 'http://localhost:4000/'
 })
 instantAxios.interceptors.request.use((request) => {
     let token = localStorage.getItem('accessToken')
@@ -40,3 +40,20 @@ export const updateproduct = (id, body) => {
 export const deleteProduct = (id) => {
     return instantAxios.delete('/product/' + id)
 }
+
+export const CreateNews = (body, header) => {
+    return instantAxios.post('/news/auth/create', body, header)
+}
+
+export const getNews = (number) => {
+    return instantAxios.get('/news?page=' + number)
+}
+
+export const getNewsById = (id) => {
+    return instantAxios.get('/news/' + id)
+}
+
+export const updateNews = (id, body, header) => {
+    return instantAxios.put('/news/auth/update/' + id, body, header)
+}
+

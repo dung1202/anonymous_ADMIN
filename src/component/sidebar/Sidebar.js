@@ -1,4 +1,6 @@
 import "./sidebar.css";
+import EditIcon from '@mui/icons-material/Edit';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
 import {
   LineStyle,
   Timeline,
@@ -60,6 +62,18 @@ export default function Sidebar() {
               <li className="sidebarListItem">
                 <PermIdentity className="sidebarIcon" />
              Newproduct
+              </li>
+            </Link>
+            <Link to="/editor" className="link">
+              <li className="sidebarListItem">
+                <EditIcon className="sidebarIcon" />
+             Editor
+              </li>
+            </Link>
+            <Link to="/newsdashboards" className="link">
+              <li className="sidebarListItem">
+                <NewspaperIcon className="sidebarIcon" />
+             NewsDashBoards
               </li>
             </Link>
           </ul>

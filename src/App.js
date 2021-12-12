@@ -20,6 +20,9 @@ import NewProduct from "../src/pages/newpoduct/NewProduct";
 import ProductList from "../src/pages/productList/ProductList";
 import Profile from "./pages/profile/Profile";
 import Messages from "./pages/Message/Messages";
+import Editor from './pages/news/richTextEditor/editor';
+import CrudNews from './pages/news/newsDashBoards/crudNews';
+import EditorNews from './pages/news/richTextEditor/editNews';
 import { useEffect, useState } from "react";
 function App() {
   return (
@@ -38,6 +41,9 @@ function App() {
           <Route path="/product/:productId" element={<Product />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/message" element={<Messages />} />
+          <Route path="/editor" element={<Editor />} />
+          <Route path="/editor/:userId" element={<EditorNews />} />
+          <Route path="/newsdashboards" element={<CrudNews />} />
         </Routes>
       </div>
     </Router>
