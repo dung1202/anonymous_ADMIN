@@ -8,6 +8,10 @@
   flex-wrap: wrap;
 }
 
+.ok{
+  width: 820px !important;
+}
+
 .addProductItem {
   width: 400px;
   display: flex;
@@ -31,7 +35,7 @@
 }
 
 .addProductButton {
-  width: 200px;
+  width: 250px;
   border: none;
   background-color: darkblue;
   color: white;
@@ -42,7 +46,7 @@
   cursor: pointer;
   text-align: center;
   height: 25px;
-  /* margin-top: 200px; */
+  margin-bottom: 50px;
 }
 
 .err{

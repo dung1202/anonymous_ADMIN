@@ -4,6 +4,11 @@ import { Publish } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import { getProductid, updateproduct } from "../../axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { storage } from "../news/richTextEditor/uploadFireBase";
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+
 export default function Product() {
   const [name, setName] = useState("");
   const [listedPrice, setListedPrice] = useState("");
@@ -23,6 +28,31 @@ export default function Product() {
   const changeFile = (e) => {
     console.log(e.target.files);
     setFile(e.target.files);
+  };
+
+  const custom_config = {
+    extraPlugins: [MyCustomUploadAdapterPlugin],
+    toolbar: {
+      items: [
+        "heading",
+        "|",
+        "bold",
+        "italic",
+        "link",
+        "bulletedList",
+        "numberedList",
+        "|",
+        "blockQuote",
+        "insertTable",
+        "|",
+        "imageUpload",
+        "undo",
+        "redo",
+      ],
+    },
+    table: {
+      contentToolbar: ["tableColumn", "tableRow", "mergeTableCells"],
+    },
   };
 
   useEffect(() => {
@@ -116,30 +146,6 @@ export default function Product() {
           />
         </div>
         <div className="addProductItem">
-          <label>Is Hot</label>
-          <select
-            name="active"
-            id="active"
-            value={is_hot}
-            onChange={(e) => setIs_hot(e.target.value)}
-          >
-            <option value={false}>false</option>
-            <option value={true}>true</option>
-          </select>
-        </div>
-        <div className="addProductItem">
-          <label>In Slider</label>
-          <select
-            name="active"
-            id="active"
-            value={in_slider}
-            onChange={(e) => setIn_slider(e.target.value)}
-          >
-            <option value={false}>false</option>
-            <option value={true}>true</option>
-          </select>
-        </div>
-        <div className="addProductItem">
           <label>Vote</label>
           <input
             type="number"
@@ -166,13 +172,43 @@ export default function Product() {
             onChange={(e) => setTags(e.target.value)}
           />
         </div>
-
         <div className="addProductItem">
+          <label>Is Hot</label>
+          <input
+            type="checkbox"
+            checked={is_hot}
+            onChange={() => {
+              setIn_slider(!is_hot);
+            }}
+          />
+        </div>
+        <div className="addProductItem">
+          <label>In Slider</label>
+          <input
+            type="checkbox"
+            checked={in_slider}
+            onChange={() => {
+              setIn_slider(!in_slider);
+            }}
+          />
+        </div>
+        <div className="addProductItem ok">
           <label>Description</label>
-          <textarea
-            className="textarea"
-            onChange={(e) => setDescription(e.target.value)}
-            value={description}
+          <CKEditor
+            editor={ClassicEditor}
+            data={description}
+            onChange={(event, editor) => {
+              const data = editor.getData();
+              setDescription(data);
+              console.log(data);
+            }}
+            config={custom_config}
+            onBlur={(event, editor) => {
+              console.log("Blur.", editor);
+            }}
+            onFocus={(event, editor) => {
+              console.log("Focus.", editor);
+            }}
           />
         </div>
         <div className="addProductButton" onClick={wewe}>
@@ -181,4 +217,37 @@ export default function Product() {
       </form>
     </div>
   );
+}
+
+function MyCustomUploadAdapterPlugin(editor) {
+  editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
+    return new MyUploadAdapter(loader);
+  };
+}
+
+class MyUploadAdapter {
+  constructor(loader) {
+    console.log(loader);
+    this.loader = loader;
+  }
+  // Starts the upload process.
+  upload() {
+    return this.loader.file.then(
+      (file) =>
+        new Promise((resolve, reject) => {
+          let storageRef = ref(storage, `files/${file.name}`);
+          let uploadTask = uploadBytesResumable(storageRef, file);
+          uploadTask.on(
+            (error) => console.log(error),
+            () => {
+              getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                resolve({
+                  default: downloadURL,
+                });
+              });
+            }
+          );
+        })
+    );
+  }
 }

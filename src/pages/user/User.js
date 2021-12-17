@@ -5,7 +5,6 @@ import {
   PermIdentity,
   PhoneAndroid,
   Publish,
-  SettingsInputHdmiOutlined,
 } from "@material-ui/icons";
 import { Link, Navigate, useParams, useLocation } from "react-router-dom";
 import "./user.css";

@@ -78,7 +78,7 @@ export default function EditorNews() {
 
 
   return (
-    <div className="App">
+    <div className="App1">
       <div className="container">
         <div className="wrapper">
           <form className="form-group">

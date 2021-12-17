@@ -70,7 +70,7 @@ export default function Editor() {
 
 
   return (
-    <div className="App">
+    <div className="App1">
       <div className="container">
         <div className="wrapper">
           <form className="form-group">

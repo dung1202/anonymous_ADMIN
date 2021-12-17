@@ -12,6 +12,7 @@ export default function ProductList() {
   setTimeout(() => {
     if (time < 3) setTime(time + 1);
     else setTime(0);
+    console.log(time);
   }, 2000);
   useEffect(async () => {
     let result = await getProduct();
@@ -32,8 +33,8 @@ export default function ProductList() {
     { field: "_id", headerName: "ID", width: 100, height: 100 },
     {
       field: "product",
-      headerName: "Product",
-      width: 150,
+      headerName: "Ảnh",
+      width: 110,
       height: 100,
       renderCell: (params) => {
         return (
@@ -43,34 +44,59 @@ export default function ProductList() {
               src={params.row.listphotos[time]}
               alt=""
             />
-            {/* {params.row.name} */}
           </div>
         );
       },
     },
-    { field: "name", headerName: "Name", width: 200, height: 100 },
+    { field: "name", headerName: "Name", width: 150, height: 100 },
     {
       field: "discountPrice",
       headerName: "DiscountPrice",
-      width: 100,
+      width: 120,
       height: 100,
     },
     {
       field: "listedPrice",
       headerName: "Price",
-      width: 160,
+      width: 120,
       height: 100,
     },
     {
       field: "quantity",
       headerName: "Quantity",
-      width: 160,
+      width: 100,
       height: 100,
+    },
+    {
+      field: "is_hot",
+      headerName: "Hot",
+      width: 100,
+      height: 100,
+      renderCell: (params) => {
+        return (
+          <>
+            <input type="checkbox" readonly checked={params.row.is_hot}/>
+          </>
+        );
+      },
+    },
+    {
+      field: "in_slider",
+      headerName: "Slider",
+      width: 100,
+      height: 100,
+      renderCell: (params) => {
+        return (
+          <>
+            <input type="checkbox" readonly checked={params.row.in_slider}/>
+          </>
+        );
+      },
     },
     {
       field: "action",
       headerName: "Action",
-      width: 150,
+      width: 120,
       height: 100,
       renderCell: (params) => {
         return (
@@ -95,8 +121,8 @@ export default function ProductList() {
         disableSelectionOnClick
         columns={columns}
         getRowId={(row) => row._id}
-        pageSize={10}
-        checkboxSelection
+        pageSize={9}
+        // checkboxSelection
       />
     </div>
   );

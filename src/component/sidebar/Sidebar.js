@@ -1,6 +1,6 @@
 import "./sidebar.css";
-import EditIcon from '@mui/icons-material/Edit';
-import NewspaperIcon from '@mui/icons-material/Newspaper';
+import EditIcon from "@mui/icons-material/Edit";
+import NewspaperIcon from "@mui/icons-material/Newspaper";
 import {
   LineStyle,
   Timeline,
@@ -12,6 +12,8 @@ import {
   ChatBubbleOutline,
   Report,
 } from "@material-ui/icons";
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import { Link } from "react-router-dom";
 
 export default function Sidebar() {
@@ -22,10 +24,10 @@ export default function Sidebar() {
           <h3 className="sidebarTitle">Dashboard</h3>
           <ul className="sidebarList">
             <Link to="/" className="link">
-            <li className="sidebarListItem active">
-              <LineStyle className="sidebarIcon" />
-              Home
-            </li>
+              <li className="sidebarListItem active">
+                <LineStyle className="sidebarIcon" />
+                Home
+              </li>
             </Link>
             <li className="sidebarListItem">
               <Timeline className="sidebarIcon" />
@@ -48,8 +50,8 @@ export default function Sidebar() {
             </Link>
             <Link to="/user/newuser" className="link">
               <li className="sidebarListItem">
-                <PermIdentity className="sidebarIcon" />
-             Newuser
+                <PersonAddAltIcon className="sidebarIcon" />
+                Newuser
               </li>
             </Link>
             <Link to="/products" className="link">
@@ -60,20 +62,20 @@ export default function Sidebar() {
             </Link>
             <Link to="/products/newproduct" className="link">
               <li className="sidebarListItem">
-                <PermIdentity className="sidebarIcon" />
-             Newproduct
+                <AddBusinessIcon className="sidebarIcon" />
+                Newproduct
               </li>
             </Link>
             <Link to="/editor" className="link">
               <li className="sidebarListItem">
                 <EditIcon className="sidebarIcon" />
-             Editor
+                Editor
               </li>
             </Link>
             <Link to="/newsdashboards" className="link">
               <li className="sidebarListItem">
                 <NewspaperIcon className="sidebarIcon" />
-             NewsDashBoards
+                NewsDashBoards
               </li>
             </Link>
           </ul>
@@ -87,8 +89,8 @@ export default function Sidebar() {
             </li>
             <Link to="/message" className="link">
               <li className="sidebarListItem">
-                < ChatBubbleOutline className="sidebarIcon" />
-               Message
+                <ChatBubbleOutline className="sidebarIcon" />
+                Message
               </li>
             </Link>
             <li className="sidebarListItem">
@@ -96,7 +98,7 @@ export default function Sidebar() {
               Reports
             </li>
           </ul>
-        </div>   
+        </div>
       </div>
     </div>
   );
