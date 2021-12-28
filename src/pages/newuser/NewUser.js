@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./newuser.css";
-import { useNavigate } from "react-router-dom";
-import { createuser } from "../../axios";
+// import { useNavigate } from "react-router-dom";
+// import { createuser } from "../../axios";
 export default function NewUser() {
-  let navigate = useNavigate();
+  // let navigate = useNavigate();
 
   const [username, setUsername] = useState("");
   const [password, setpassword] = useState("");

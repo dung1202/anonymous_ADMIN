@@ -55,9 +55,11 @@ export const getNewsById = (id) => {
   return instantAxios.get("/news/" + id);
 };
 
-export const updateNews = (id, body, header) => {
-  return instantAxios.put("/news/auth/update/" + id, body, header);
+export const updateNews = (id, body) => {
+  return instantAxios.put("/news/auth/update/" + id, body);
 };
 
 export const login = (body) => instantAxios.post("/login", body);
 export const checkToken = () => instantAxios.post("/auth/checktoken");
+export const loginAdmin = (body) => instantAxios.post("/admin/login", body);
+export const getUserById = (id) => instantAxios.get("/user/" + id);

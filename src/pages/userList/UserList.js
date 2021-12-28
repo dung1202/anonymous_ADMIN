@@ -1,25 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import "./userList.css"
+import React, { useEffect, useState } from "react";
+import "./userList.css";
 import { DataGrid } from "@mui/x-data-grid";
-import { Link, useLocation } from 'react-router-dom'
-import { deleteuser, getuser } from '../../axios'
+import { Link } from "react-router-dom";
+import { deleteuser, getuser } from "../../axios";
 import { DeleteOutline } from "@material-ui/icons";
 export default function UserList() {
-  const [data, setData] = useState(null)
-  const [users, setUsers] = useState([])
-  useEffect(async () => {
-    let kq = await getuser()
-    setUsers(kq.data)
-  }, [users])
- const deletedata = (id) => {
-    deleteuser(id)
-    getuser().then(res => {
-      setData(res.data)
-    })
-       .catch(err => {
-        setData(null)
-      })
-  }
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    getuser().then((res) => {
+      setUsers(res.data);
+    });
+  }, [users]);
+  const deletedata = (id) => {
+    deleteuser(id);
+  };
   const columns = [
     { field: "_id", headerName: "ID", width: 220 },
     {
@@ -29,8 +23,8 @@ export default function UserList() {
       renderCell: (params) => {
         return (
           <div className="userListItem">
-            <img className="userListImg" src={params.row.photoUrl} alt="" />
-             <div className="userListname">{params.row.username}</div>
+            <img alt="" className="userListImg" src={params.row.photoUrl} />
+            <div className="userListname">{params.row.username}</div>
           </div>
         );
       },
@@ -48,12 +42,12 @@ export default function UserList() {
       renderCell: (params) => {
         return (
           <>
-            {/* <Link to={"/user/" + params.row._id}>
-              <button className="productListEdit">Edit</button>
-            </Link> */}
+            <Link to={"/user/" + params.row._id}>
+              <button className="productListEdit">UUI</button>
+            </Link>
             <DeleteOutline
               className="productListDelete"
-             onClick ={() => deletedata(params.row._id)}
+              onClick={() => deletedata(params.row._id)}
             />
           </>
         );
@@ -69,12 +63,8 @@ export default function UserList() {
         columns={columns}
         getRowId={(row) => row._id}
         pageSize={8}
-        checkboxSelection
+        // checkboxSelection
       />
     </div>
   );
-  
- 
- 
-
 }

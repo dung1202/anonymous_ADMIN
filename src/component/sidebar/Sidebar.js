@@ -7,13 +7,12 @@ import {
   TrendingUp,
   PermIdentity,
   Storefront,
-  AttachMoney,
   DynamicFeed,
   ChatBubbleOutline,
   Report,
 } from "@material-ui/icons";
-import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
-import AddBusinessIcon from '@mui/icons-material/AddBusiness';
+import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
+import AddBusinessIcon from "@mui/icons-material/AddBusiness";
 import { Link } from "react-router-dom";
 
 export default function Sidebar() {

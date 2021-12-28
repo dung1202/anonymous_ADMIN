@@ -1,6 +1,4 @@
-import { Link } from "react-router-dom";
 import "./product.css";
-import { Publish } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import { getProductid, updateproduct } from "../../axios";
 import { useNavigate, useParams } from "react-router-dom";

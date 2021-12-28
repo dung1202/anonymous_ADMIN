@@ -6,34 +6,41 @@ import {
   PhoneAndroid,
   Publish,
 } from "@material-ui/icons";
-import { Link, Navigate, useParams, useLocation } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import "./user.css";
-import React, { useEffect, useState } from 'react'
-import { getuser, updateuser, getuserid } from '../../axios'
+import React, { useEffect, useState } from "react";
+import { updateuser, getuserid } from "../../axios";
 export default function User() {
-  const [username, setusername] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
-  const [role,setRole] = useState('');
-  const[dob,setDob] = useState('')
-  const [data, setData] = useState([])
-  let location = useLocation();
-  const param = useParams()
-  const [id, setId] = useState(param.id)
+  const [username, setusername] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  // const [role, setRole] = useState("");
+  const [dob] = useState("");
+  // const [data, setData] = useState([]);
+  const param = useParams();
+  const [id] = useState(param.id);
   useEffect(() => {
     if (id) {
-      getuserid(id).then(res => {
-        let data = res.data
-        setusername(data.username)
-        setEmail(data.email)
-        setPhone(data.phone)
-        setAddress(data.address)
-      })
-
+      getuserid(id).then((res) => {
+        let data = res.data;
+        setusername(data.username);
+        setEmail(data.email);
+        setPhone(data.phone);
+        const Address =
+          data.address.detail +
+          " " +
+          data.address.ward +
+          " " +
+          data.address.district +
+          " " +
+          data.address.city;
+        setAddress(Address);
+      });
     }
-  }, [])
-  const img = "https://firebasestorage.googleapis.com/v0/b/anonymous-b685e.appspot.com/o/acc_clone.png?alt=media";
+  }, [id]);
+  const img =
+    "https://firebasestorage.googleapis.com/v0/b/anonymous-b685e.appspot.com/o/acc_clone.png?alt=media";
 
   const updatedata = () => {
     let body = {
@@ -41,27 +48,27 @@ export default function User() {
       username,
       email,
       phone,
-      address
-    }
-    updateuser(body).then(res => {
-      Navigate.push('/user')
-    })
-  }
+      address,
+    };
+    updateuser(body).then((res) => {
+      Navigate.push("/user");
+    });
+  };
 
   const changeName = (e) => {
-    setusername(e.target.value)
-  }
+    setusername(e.target.value);
+  };
   return (
     <div className="user">
       <div className="userTitleContainer">
-        <h1 className="userTitle">Edit User</h1>
+        <h1 className="userTitle">User information</h1>
       </div>
       <div className="userContainer">
-      <div className="userShow">
+        <div className="userShow">
           <div className="userShowTop">
             <img
-              src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
               alt=""
+              src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
               className="userShowImg"
             />
             <div className="userShowTopTitle">
@@ -101,7 +108,8 @@ export default function User() {
                 <label>Username</label>
                 <input
                   type="text"
-                  value={username} onChange={changeName}
+                  value={username}
+                  onChange={changeName}
                   placeholder="Username"
                   className="userUpdateInput"
                 />
@@ -110,7 +118,8 @@ export default function User() {
                 <label>Email</label>
                 <input
                   type="text"
-                  value={email} onChange={(e) => setEmail(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email"
                   className="userUpdateInput"
                 />
@@ -119,9 +128,9 @@ export default function User() {
                 <label>Phone</label>
                 <input
                   type="text"
-                  value={phone} onChange={(e) => setPhone(e.target.value)}
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
                   placeholder="+1 123 456 67"
-
                   className="userUpdateInput"
                 />
               </div>
@@ -129,7 +138,8 @@ export default function User() {
                 <label>Address</label>
                 <input
                   type="text"
-                  value={address} onChange={(e) => setAddress(e.target.value)}
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
                   placeholder="New York | USA"
                   className="userUpdateInput"
                 />
@@ -137,13 +147,15 @@ export default function User() {
             </div>
             <div className="userUpdateRight">
               <div className="userUpdateUpload">
-              <img className='userShowImg' src={img} />
+                <img alt="" className="userShowImg" src={img} />
                 <label htmlFor="file">
                   <Publish className="userUpdateIcon" />
                 </label>
                 <input type="file" id="file" style={{ display: "none" }} />
               </div>
-              <button className="userUpdateButton" onClick={updatedata}>Update</button>
+              <button className="userUpdateButton" onClick={updatedata}>
+                Update
+              </button>
             </div>
           </form>
         </div>

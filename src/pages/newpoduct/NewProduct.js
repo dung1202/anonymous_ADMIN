@@ -1,7 +1,7 @@
 import "./newproduct.css";
 import { useNavigate } from "react-router-dom";
 import { createproduct } from "../../axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { storage } from "../news/richTextEditor/uploadFireBase";
@@ -161,7 +161,7 @@ export default function NewProduct() {
             type="checkbox"
             checked={is_hot}
             onChange={() => {
-              setIn_slider(!is_hot);
+              setIs_hot(!is_hot);
             }}
           />
         </div>

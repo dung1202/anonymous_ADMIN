@@ -1,13 +1,16 @@
 import { useState } from "react";
-import { login } from "../../axios";
-import { useNavigate } from "react-router-dom";
-const Login = () => {
+import { loginAdmin } from "../../axios";
+import jwt_decode from "jwt-decode";
+const Login = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [err, seterr] = useState("");
-  let navigate = useNavigate();
   const handleClick = (e) => {
     e.preventDefault();
+    submit();
+  };
+
+  const submit = () => {
     const body = {
       username,
       password,
@@ -22,20 +25,14 @@ const Login = () => {
     ) {
       seterr("Tên đăng nhập hoặc mật khẩu sai");
     } else {
-      login(body).then((res) => {
+      loginAdmin(body).then((res) => {
         if (res.data.message !== "Login successfully!") {
           seterr("Tên đăng nhập hoặc mật khẩu sai");
-        } else if (
-          res.data.message === "Login successfully!" &&
-          res.data.user.role === "admin"
-        ) {
-          localStorage.setItem("accessToken", res.data.accessToken);
+        } else if (res.data.message === "Login successfully!") {
           console.log(res.data);
-          seterr("");
-          navigate("/");
-        } else if (res.data.user.role != "admin") {
-          console.log(res.data);
-          seterr("Bạn không phải admin");
+          const user = res.data.user
+          user._id = jwt_decode(res.data.accessToken)._id;
+          props.dn(res.data.accessToken, user);
         }
       });
     }
@@ -65,6 +62,11 @@ const Login = () => {
         type="password"
         placeholder="password"
         onChange={(e) => setPassword(e.target.value)}
+        onKeyUp={(e) => {
+          if (e.keyCode === 13) {
+            submit();
+          }
+        }}
       />
       <div style={{ color: "red", marginBottom: "10px" }}>{err}</div>
       <button onClick={handleClick} style={{ padding: 10, width: 100 }}>

@@ -1,73 +1,90 @@
-import React, { useState } from 'react';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import React, { useState, useEffect } from "react";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 // import ReactHtmlParser from 'react-html-parser';
-import { storage } from './uploadFireBase';
+import { storage } from "./uploadFireBase";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
-import { Link } from "react-router-dom";
-import { CreateNews } from "../../../axios"
-import "../../news/richTextEditor/edit.css"
+import { Link, useNavigate } from "react-router-dom";
+import { CreateNews } from "../../../axios";
+import "../../news/richTextEditor/edit.css";
+import { Publish } from "@material-ui/icons";
 
-export default function Editor() {
+export default function Editor(props) {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [value, setValue] = useState("");
-
+  const [userName, setuserName] = useState("");
+  const [userId, setuserId] = useState("");
+  const [linkAnh, setlinkAnh] = useState("");
+  const [file] = useState("");
+  useEffect(() => {
+    console.log(props.tt);
+    setuserName(props.tt.userName);
+    setuserId(props.tt._id);
+  }, [props.tt]);
   const custom_config = {
     extraPlugins: [MyCustomUploadAdapterPlugin],
     toolbar: {
       items: [
-        'heading',
-        '|',
-        'bold',
-        'italic',
-        'link',
-        'bulletedList',
-        'numberedList',
-        '|',
-        'blockQuote',
-        'insertTable',
-        '|',
-        'imageUpload',
-        'undo',
-        'redo'
-      ]
+        "heading",
+        "|",
+        "bold",
+        "italic",
+        "link",
+        "bulletedList",
+        "numberedList",
+        "|",
+        "blockQuote",
+        "insertTable",
+        "|",
+        "imageUpload",
+        "undo",
+        "redo",
+      ],
     },
     table: {
-      contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
-    }
-  }
+      contentToolbar: ["tableColumn", "tableRow", "mergeTableCells"],
+    },
+  };
 
   const handle2 = (e) => {
     const data = e.target.value;
-    setEmail(data)
+    setEmail(data);
     console.log(data);
   };
 
-
   const submit = (e) => {
-    e.preventDefault()
-    const body = {
-      creator_id: "61ab8be33451682f8101abfe",
-      creator: "minhquang3",
-      title: email,
-      content: value
-    }
+    e.preventDefault();
+    const fromdata = new FormData();
+    fromdata.append("file", file, file.name);
+    fromdata.append("creator_id", userId);
+    fromdata.append("creator", userName);
+    fromdata.append("title", email);
+    fromdata.append("content", value);
 
-    const auth = {
-      headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWFiOGJlMzM0NTE2ODJmODEwMWFiZmUiLCJpYXQiOjE2Mzg2MzI5NjcsImV4cCI6MTYzODY0MDE2N30.eedGh38m5CsKfIgPuXUXp15Gl6VFkiq7PCqFsntSHX8",
-      },
-    }
-    console.log(body);
-    CreateNews(body, auth).then((res) => {
-      console.log("ok");
-    }).catch((err) => {
-      console.log(err);
-    });
+    CreateNews(fromdata)
+      .then((res) => {
+        navigate("/newsdashboards");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-  }
-
+  const upanh = (e) => {
+    const ok = e.target.files[0];
+    console.log(ok);
+    let storageRef = ref(storage, `anh/${ok.name}`);
+    let uploadTask = uploadBytesResumable(storageRef, ok);
+    uploadTask.on(
+      (error) => console.log(error),
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setlinkAnh(downloadURL);
+        });
+      }
+    );
+  };
 
   return (
     <div className="App1">
@@ -78,7 +95,24 @@ export default function Editor() {
 
             <div className="form-group">
               <label>Title</label>
-              <input type="text" onChange={handle2} placeholder="Title" className="form-control" />
+              <input
+                type="text"
+                onChange={handle2}
+                placeholder="Title"
+                className="form-control"
+              />
+            </div>
+            <div className="userUpdateUpload">
+              <img alt="" className="userShowImg" src={linkAnh} />
+              <label htmlFor="file">
+                <Publish className="userUpdateIcon" />
+              </label>
+              <input
+                type="file"
+                id="file"
+                style={{ display: "none" }}
+                onChange={upanh}
+              />
             </div>
             <div className="form-group">
               <label>Content</label>
@@ -87,15 +121,15 @@ export default function Editor() {
                 data={value}
                 onChange={(event, editor) => {
                   const data = editor.getData();
-                  setValue(data)
+                  setValue(data);
                   console.log(data);
                 }}
                 config={custom_config}
                 onBlur={(event, editor) => {
-                  console.log('Blur.', editor);
+                  console.log("Blur.", editor);
                 }}
                 onFocus={(event, editor) => {
-                  console.log('Focus.', editor);
+                  console.log("Focus.", editor);
                 }}
               />
             </div>
@@ -105,19 +139,15 @@ export default function Editor() {
           </form>
         </div>
       </div>
-
     </div>
   );
 }
 
-
 function MyCustomUploadAdapterPlugin(editor) {
-  editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-    return new MyUploadAdapter(loader)
-  }
+  editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
+    return new MyUploadAdapter(loader);
+  };
 }
-
-
 
 class MyUploadAdapter {
   constructor(loader) {
@@ -127,7 +157,7 @@ class MyUploadAdapter {
   // Starts the upload process.
   upload() {
     return this.loader.file.then(
-      file =>
+      (file) =>
         new Promise((resolve, reject) => {
           let storageRef = ref(storage, `files/${file.name}`);
           let uploadTask = uploadBytesResumable(storageRef, file);
@@ -136,7 +166,7 @@ class MyUploadAdapter {
             () => {
               getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                 resolve({
-                  default: downloadURL
+                  default: downloadURL,
                 });
               });
             }
@@ -145,14 +175,3 @@ class MyUploadAdapter {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-

@@ -1,12 +1,12 @@
 import "./productlist.css";
 import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline } from "@material-ui/icons";
-import react, { useEffect, useState } from "react";
+import CheckIcon from "@mui/icons-material/Check";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getProduct, deleteProduct } from "../../axios";
 
 export default function ProductList() {
-  const [data, setData] = useState(null);
   const [product, setProduct] = useState([]);
   const [time, setTime] = useState(0);
   setTimeout(() => {
@@ -14,20 +14,13 @@ export default function ProductList() {
     else setTime(0);
     console.log(time);
   }, 2000);
-  useEffect(async () => {
-    let result = await getProduct();
-    setProduct(result.data);
+  useEffect(() => {
+    getProduct().then((res) => {
+      setProduct(res.data);
+    });
   }, [product]);
   const deletedata = (id) => {
     deleteProduct(id);
-
-    getProduct()
-      .then((res) => {
-        setData(res.data);
-      })
-      .catch((err) => {
-        setData(null);
-      });
   };
   const columns = [
     { field: "_id", headerName: "ID", width: 100, height: 100 },
@@ -40,9 +33,9 @@ export default function ProductList() {
         return (
           <div className="productListItem">
             <img
+              alt=""
               className="productListImg"
               src={params.row.listphotos[time]}
-              alt=""
             />
           </div>
         );
@@ -75,7 +68,7 @@ export default function ProductList() {
       renderCell: (params) => {
         return (
           <>
-            <input type="checkbox" readonly checked={params.row.is_hot}/>
+            {params.row.is_hot ? <CheckIcon className="sidebarIcon" /> : null}
           </>
         );
       },
@@ -88,7 +81,9 @@ export default function ProductList() {
       renderCell: (params) => {
         return (
           <>
-            <input type="checkbox" readonly checked={params.row.in_slider}/>
+            {params.row.in_slider ? (
+              <CheckIcon className="sidebarIcon" />
+            ) : null}
           </>
         );
       },
@@ -118,7 +113,6 @@ export default function ProductList() {
     <div className="productList">
       <DataGrid
         rows={product}
-        disableSelectionOnClick
         columns={columns}
         getRowId={(row) => row._id}
         pageSize={9}
