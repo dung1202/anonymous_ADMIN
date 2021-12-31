@@ -87,7 +87,8 @@ export default function EditorNews(props) {
       (error) => console.log(error),
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setlinkAnh(downloadURL);
+          
+          setanh(downloadURL);
         });
       }
     );
