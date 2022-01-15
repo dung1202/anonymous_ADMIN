@@ -22,6 +22,14 @@ export default function ProductList() {
   const deletedata = (id) => {
     deleteProduct(id);
   };
+
+  const numberFormat = new Intl.NumberFormat(
+    "vi-VN",
+    {
+      style: "currency",
+      currency: "VND",
+    } || undefined
+  );
   const columns = [
     { field: "_id", headerName: "ID", width: 100, height: 100 },
     {
@@ -43,17 +51,28 @@ export default function ProductList() {
     },
     { field: "name", headerName: "Name", width: 150, height: 100 },
     {
-      field: "discountPrice",
-      headerName: "DiscountPrice",
-      width: 120,
-      height: 100,
-    },
-    {
       field: "listedPrice",
       headerName: "Price",
       width: 120,
       height: 100,
+      renderCell: (params) => {
+        return <>{numberFormat.format(params.row.listedPrice)}</>;
+      },
     },
+    {
+      field: "discountPrice",
+      headerName: "DiscountPrice",
+      width: 120,
+      height: 100,
+      renderCell: (params) => {
+        return (
+          <div style={{ color: "red" }}>
+            {numberFormat.format(params.row.discountPrice)}
+          </div>
+        );
+      },
+    },
+
     {
       field: "quantity",
       headerName: "Quantity",

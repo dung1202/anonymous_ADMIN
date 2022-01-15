@@ -2,8 +2,8 @@ import axios from "axios";
 
 const instantAxios = axios.create({
   timeout: 20000,
-  // baseURL: "https://voucherhunter.herokuapp.com",
-  baseURL: 'http://localhost:4000/'
+  baseURL: "https://voucherhunter.herokuapp.com",
+  // baseURL: 'http://localhost:4000/'
 });
 instantAxios.interceptors.request.use((request) => {
   let token = localStorage.getItem("accessToken");
@@ -21,10 +21,6 @@ export const getuserid = (id) => {
 };
 export const updateuser = (body) => {
   return instantAxios.put("/user", body);
-};
-
-export const createuser = (body) => {
-  return instantAxios.post("/register", body);
 };
 
 export const createproduct = (formData) => {
@@ -63,3 +59,8 @@ export const login = (body) => instantAxios.post("/login", body);
 export const checkToken = () => instantAxios.post("/auth/checktoken");
 export const loginAdmin = (body) => instantAxios.post("/admin/login", body);
 export const getUserById = (id) => instantAxios.get("/user/" + id);
+export const createuser = (body) => {
+  return instantAxios.post("/register", body);
+};
+
+export const getInvoice = (url) => instantAxios.get(url);

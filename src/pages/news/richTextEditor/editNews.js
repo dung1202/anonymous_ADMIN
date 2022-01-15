@@ -9,13 +9,11 @@ import { getNewsById, updateNews } from "../../../axios";
 import "../../news/richTextEditor/edit.css";
 import { Publish } from "@material-ui/icons";
 
-export default function EditorNews(props) {
+export default function EditorNews() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [value, setValue] = useState("");
   const param = useParams();
-  // const [userName, setuserName] = useState("");
-  // const [userId, setuserId] = useState("");
   const [linkAnh, setlinkAnh] = useState("");
   const [file, setfile] = useState("");
   useEffect(() => {
@@ -87,8 +85,7 @@ export default function EditorNews(props) {
       (error) => console.log(error),
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          
-          setanh(downloadURL);
+          setlinkAnh(downloadURL);
         });
       }
     );

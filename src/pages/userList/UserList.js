@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./userList.css";
 import { DataGrid } from "@mui/x-data-grid";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { deleteuser, getuser } from "../../axios";
 import { DeleteOutline } from "@material-ui/icons";
 export default function UserList() {
@@ -42,9 +42,9 @@ export default function UserList() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/user/" + params.row._id}>
+            {/* <Link to={"/user/" + params.row._id}>
               <button className="productListEdit">UUI</button>
-            </Link>
+            </Link> */}
             <DeleteOutline
               className="productListDelete"
               onClick={() => deletedata(params.row._id)}
@@ -62,7 +62,7 @@ export default function UserList() {
         disableSelectionOnClick
         columns={columns}
         getRowId={(row) => row._id}
-        pageSize={8}
+        pageSize={9}
         // checkboxSelection
       />
     </div>

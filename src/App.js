@@ -11,10 +11,12 @@ import UserList from "../src/pages/userList/UserList";
 import NewProduct from "../src/pages/newpoduct/NewProduct";
 import ProductList from "../src/pages/productList/ProductList";
 import Profile from "./pages/profile/Profile";
-import Messages from "./pages/Message/Messages";
+// import Messages from "./pages/Message/Messages";
 import Editor from "./pages/news/richTextEditor/editor";
 import CrudNews from "./pages/news/newsDashBoards/crudNews";
 import EditorNews from "./pages/news/richTextEditor/editNews";
+import InvoiceList from "./pages/invoiceList/invoiceList";
+import Invoice from "./pages/invoice/invoice";
 import { useState } from "react";
 function App() {
   const [token, settoken] = useState("");
@@ -44,13 +46,15 @@ function App() {
               <Route path="/products" element={<ProductList />} />
               <Route path="/product/:productId" element={<Product />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/message" element={<Messages />} />
+              {/* <Route path="/message" element={<Messages />} /> */}
               <Route path="/editor" element={<Editor tt={ttAdmin} />} />
               <Route
                 path="/editor/:userId"
                 element={<EditorNews tt={ttAdmin} />}
               />
               <Route path="/newsdashboards" element={<CrudNews />} />
+              <Route path="/invoice" element={<InvoiceList />} />
+              <Route path="/invoiceDetail" element={<Invoice />} />
             </Routes>
           </div>
         </>

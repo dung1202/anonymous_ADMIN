@@ -11,6 +11,7 @@ import {
   ChatBubbleOutline,
   Report,
 } from "@material-ui/icons";
+import RequestPageOutlinedIcon from '@mui/icons-material/RequestPageOutlined';
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import AddBusinessIcon from "@mui/icons-material/AddBusiness";
 import { Link } from "react-router-dom";
@@ -50,7 +51,7 @@ export default function Sidebar() {
             <Link to="/user/newuser" className="link">
               <li className="sidebarListItem">
                 <PersonAddAltIcon className="sidebarIcon" />
-                Newuser
+                Newadmin
               </li>
             </Link>
             <Link to="/products" className="link">
@@ -75,6 +76,12 @@ export default function Sidebar() {
               <li className="sidebarListItem">
                 <NewspaperIcon className="sidebarIcon" />
                 NewsDashBoards
+              </li>
+            </Link>
+            <Link to="/invoice" className="link">
+              <li className="sidebarListItem">
+                <RequestPageOutlinedIcon className="sidebarIcon" />
+                Invoice
               </li>
             </Link>
           </ul>
