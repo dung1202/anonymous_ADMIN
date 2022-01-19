@@ -17,15 +17,23 @@ import CrudNews from "./pages/news/newsDashBoards/crudNews";
 import EditorNews from "./pages/news/richTextEditor/editNews";
 import InvoiceList from "./pages/invoiceList/invoiceList";
 import Invoice from "./pages/invoice/invoice";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 function App() {
   const [token, settoken] = useState("");
   const [ttAdmin, setttAdmin] = useState("");
+  const [invoice, setinvoice] = useState("");
   const loginSuccess = (token, tt) => {
     settoken(token);
     setttAdmin(tt);
     localStorage.setItem("accessToken", token);
   };
+  const data = (tt) => {
+    setinvoice(tt);
+  };
+  useEffect(() => {
+    let e = localStorage.getItem("accessToken");
+    settoken(e);
+  }, [token]);
   return (
     <Router>
       {!token ? (
@@ -53,8 +61,11 @@ function App() {
                 element={<EditorNews tt={ttAdmin} />}
               />
               <Route path="/newsdashboards" element={<CrudNews />} />
-              <Route path="/invoice" element={<InvoiceList />} />
-              <Route path="/invoiceDetail" element={<Invoice />} />
+              <Route path="/invoice" element={<InvoiceList chuyen={data} />} />
+              <Route
+                path="/invoiceDetail"
+                element={<Invoice lay={invoice} />}
+              />
             </Routes>
           </div>
         </>

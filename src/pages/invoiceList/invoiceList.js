@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "../userList/userList.css";
 import { DataGrid } from "@mui/x-data-grid";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getInvoice, getuser } from "../../axios";
 // import { DeleteOutline } from "@material-ui/icons";
-export default function InvoiceList() {
+export default function InvoiceList(props) {
   const [users, setUsers] = useState([]);
   const [list, setlist] = useState([]);
   const [tt, settt] = useState("");
+  const navigation = useNavigate();
   useEffect(() => {
     getInvoice("/invoice/auth/get?page=1").then((res) => {
       console.log(res.data.data);
@@ -79,14 +80,14 @@ export default function InvoiceList() {
       renderCell: (params) => {
         return (
           <>
-            <Link
-              to={
-                "/invoiceDetail/" + params.row._id
-                // `?status=${params.row.status}`
-              }
+            <div
+              onClick={() => {
+                props.chuyen(params.row);
+                navigation("/invoiceDetail");
+              }}
             >
               <button className="productListEdit">Change</button>
-            </Link>
+            </div>
             {/* <DeleteOutline className="productListDelete" /> */}
           </>
         );

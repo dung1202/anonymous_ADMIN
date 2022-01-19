@@ -64,3 +64,5 @@ export const createuser = (body) => {
 };
 
 export const getInvoice = (url) => instantAxios.get(url);
+export const updateInvoice = (body) =>
+  instantAxios.put("/invoice/auth/update?page=1", body);
