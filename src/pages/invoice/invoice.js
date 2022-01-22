@@ -15,18 +15,31 @@ export default function Invoice(props) {
     return x;
   };
   const map_log = (item) => {
-    const ngaDate = new Date(item.updatedAt);
-    const ngay = validateNiceNumber(ngaDate.getDate());
-    const thang = validateNiceNumber(ngaDate.getMonth() + 1);
-    const nam = ngaDate.getFullYear();
-    const hour = validateNiceNumber(ngaDate.getHours());
-    const mintes = validateNiceNumber(ngaDate.getMinutes());
-    const s = validateNiceNumber(ngaDate.getSeconds());
+    // const ngaDate = new Date(item.updatedAt);
+    // const ngay = validateNiceNumber(ngaDate.getDate());
+    // const thang = validateNiceNumber(ngaDate.getMonth() + 1);
+    // const nam = ngaDate.getFullYear();
+    // const hour = validateNiceNumber(ngaDate.getHours());
+    // const mintes = validateNiceNumber(ngaDate.getMinutes());
+    // const s = validateNiceNumber(ngaDate.getSeconds());
+    var m = new Date(item.updatedAt);
+    var dateString =
+      ("0" + m.getUTCHours()).slice(-2) +
+      ":" +
+      ("0" + m.getUTCMinutes()).slice(-2) +
+      ":" +
+      ("0" + m.getUTCSeconds()).slice(-2) +
+      ", " +
+      ("0" + m.getUTCDate()).slice(-2) +
+      "/" +
+      ("0" + (m.getUTCMonth() + 1)).slice(-2) +
+      "/" +
+      m.getUTCFullYear();
+
     return (
       <div>
         <ui>
-          Admin {item.user_id} chuyển {item.changeAction[1]} lúc {hour}:{mintes}
-          :{s}s, {`${ngay}/${thang}/${nam}`}{" "}
+          Admin {item.user_id} chuyển {item.changeAction[1]} lúc {dateString}
         </ui>
       </div>
     );

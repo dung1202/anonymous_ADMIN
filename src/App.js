@@ -18,6 +18,8 @@ import EditorNews from "./pages/news/richTextEditor/editNews";
 import InvoiceList from "./pages/invoiceList/invoiceList";
 import Invoice from "./pages/invoice/invoice";
 import { useState, useEffect } from "react";
+import Newsletter from "./pages/newsletter/Newsletter";
+import { checkToken } from "./axios";
 function App() {
   const [token, settoken] = useState("");
   const [ttAdmin, setttAdmin] = useState("");
@@ -32,7 +34,13 @@ function App() {
   };
   useEffect(() => {
     let e = localStorage.getItem("accessToken");
-    settoken(e);
+    checkToken(e)
+      .then((res) => {
+        settoken(e);
+      })
+      .catch((err) => {
+        settoken("");
+      });
   }, [token]);
   return (
     <Router>
@@ -66,6 +74,7 @@ function App() {
                 path="/invoiceDetail"
                 element={<Invoice lay={invoice} />}
               />
+              <Route path="/newsletter" element={<Newsletter />} />
             </Routes>
           </div>
         </>

@@ -11,7 +11,8 @@ import {
   ChatBubbleOutline,
   Report,
 } from "@material-ui/icons";
-import RequestPageOutlinedIcon from '@mui/icons-material/RequestPageOutlined';
+import RequestPageOutlinedIcon from "@mui/icons-material/RequestPageOutlined";
+import MarkEmailUnreadOutlinedIcon from "@mui/icons-material/MarkEmailUnreadOutlined";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import AddBusinessIcon from "@mui/icons-material/AddBusiness";
 import { Link } from "react-router-dom";
@@ -82,6 +83,12 @@ export default function Sidebar() {
               <li className="sidebarListItem">
                 <RequestPageOutlinedIcon className="sidebarIcon" />
                 Invoice
+              </li>
+            </Link>
+            <Link to="/newsletter" className="link">
+              <li className="sidebarListItem">
+                <MarkEmailUnreadOutlinedIcon className="sidebarIcon" />
+                Newsletter
               </li>
             </Link>
           </ul>

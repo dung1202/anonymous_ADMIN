@@ -17,7 +17,7 @@ export default function Product() {
   const [is_hot, setIs_hot] = useState(false);
   const [supplier, setsupplier] = useState("");
   const [tags, setTags] = useState([]);
-  const [description, setDescription] = useState();
+  const [description, setDescription] = useState("");
   const [vote, setvote] = useState("");
   const param = useParams();
   const navigate = useNavigate();
@@ -175,8 +175,8 @@ export default function Product() {
           <input
             type="checkbox"
             checked={is_hot}
-            onChange={() => {
-              setIn_slider(!is_hot);
+            onChange={(e) => {
+              setIs_hot(!is_hot);
             }}
           />
         </div>
@@ -185,7 +185,7 @@ export default function Product() {
           <input
             type="checkbox"
             checked={in_slider}
-            onChange={() => {
+            onChange={(e) => {
               setIn_slider(!in_slider);
             }}
           />
